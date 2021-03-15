@@ -99,6 +99,8 @@ from rlbench.tasks.unplug_charger import UnplugCharger
 from rlbench.tasks.water_plants import WaterPlants
 from rlbench.tasks.weighing_scales import WeighingScales
 from rlbench.tasks.wipe_desk import WipeDesk
+from rlbench.tasks.disl_pick_up_blue_cup import DislPickUpBlueCup
+from rlbench.tasks.disl_pick_up_blue_cup_ur import DislPickUpBlueCupUr
 
 FS10_V1 = {
     'train': [
