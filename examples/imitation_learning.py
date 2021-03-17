@@ -1,7 +1,7 @@
 from rlbench.environment import Environment
 from rlbench.action_modes import ArmActionMode, ActionMode
 from rlbench.observation_config import ObservationConfig
-from rlbench.tasks import ReachTarget
+from rlbench.tasks import DislPickUpBlueCup
 import numpy as np
 
 
@@ -16,7 +16,7 @@ class ImitationLearning(object):
 
 # To use 'saved' demos, set the path below, and set live_demos=False
 live_demos = True
-DATASET = '' if live_demos else 'PATH/TO/YOUR/DATASET'
+DATASET = '' if live_demos else 'PpATH/TO/YOUR/DATASET'
 
 obs_config = ObservationConfig()
 obs_config.set_all(True)
@@ -26,7 +26,7 @@ env = Environment(
     action_mode, DATASET, obs_config, False)
 env.launch()
 
-task = env.get_task(ReachTarget)
+task = env.get_task(DislPickUpBlueCup)
 
 il = ImitationLearning()
 
