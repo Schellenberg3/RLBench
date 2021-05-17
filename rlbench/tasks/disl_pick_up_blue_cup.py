@@ -55,13 +55,11 @@ class DislPickUpBlueCup(Task):
         return 1
 
     def get_low_dim_state(self) -> np.ndarray:
-        """ Returns the cup and gripper pose"""
-
-        try:
-            cup_pose = self.cup.get_pose()
-        except:
-            cup_pose = self.robot.gripper.get_pose()
-        gripper_pose = self.robot.gripper.get_pose()
+        """ Custom low dimensional state for this task that returns the cup then gripper pose as
+        an array (X,Y,Z,Qx,Qy,Qz,Qw) for both objects.
+        """
+        cup_pose = self.cup.get_pose().copy()
+        gripper_pose = self.robot.gripper.get_pose().copy()
 
         return np.array([cup_pose,
                          gripper_pose])
