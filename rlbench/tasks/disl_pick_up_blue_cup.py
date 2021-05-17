@@ -53,3 +53,15 @@ class DislPickUpBlueCup(Task):
 
     def variation_count(self) -> int:
         return 1
+
+    def get_low_dim_state(self) -> np.ndarray:
+        """ Returns the cup and gripper pose"""
+
+        try:
+            cup_pose = self.cup.get_pose()
+        except:
+            cup_pose = self.robot.gripper.get_pose()
+        gripper_pose = self.robot.gripper.get_pose()
+
+        return np.array([cup_pose,
+                         gripper_pose])
