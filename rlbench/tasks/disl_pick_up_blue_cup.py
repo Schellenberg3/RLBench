@@ -7,6 +7,14 @@ from rlbench.backend.task import Task
 from rlbench.backend.conditions import DetectedCondition, NothingGrasped, GraspedCondition
 from rlbench.backend.spawn_boundary import SpawnBoundary
 
+#############################################################################
+# Custom task for the DISL group at Ohio State.                             #
+#                                                                           #
+# NOTE that this overrides that get_low_dim_state of the parent class and   #
+# allows us to control what information about the position of the gripper   #
+# and cup is saved at each time step.                                       #
+#############################################################################
+
 
 # Note that the class name MUST be a camel-case version of the file name
 class DislPickUpBlueCup(Task):
@@ -36,7 +44,7 @@ class DislPickUpBlueCup(Task):
                  min_distance=0.1,
                  min_rotation=(0, 0, 0),
                  max_rotation=(0, 0, 0))
-                 
+
         return ['pick up the %s cup' % target_color_name,
                 'grasp the %s cup and lift it' % target_color_name,
                 'lift the %s cup' % target_color_name]
