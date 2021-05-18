@@ -67,5 +67,4 @@ class DislPickUpBlueCup(Task):
         cup_pose = self.cup.get_pose().copy()
         gripper_pose = self.robot.gripper.get_pose().copy()
 
-        return np.array([cup_pose,
-                         gripper_pose])
+        return np.array([cup_pose, gripper_pose])
