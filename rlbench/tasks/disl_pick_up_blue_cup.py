@@ -7,6 +7,7 @@ from rlbench.backend.task import Task
 from rlbench.backend.conditions import DetectedCondition, NothingGrasped, GraspedCondition
 from rlbench.backend.spawn_boundary import SpawnBoundary
 
+
 # Note that the class name MUST be a camel-case version of the file name
 class DislPickUpBlueCup(Task):
 
@@ -25,9 +26,7 @@ class DislPickUpBlueCup(Task):
         self.variation_index = 0
         target_color_name, target_rgb = colors[4]  # gets ('blue', s(0.0,0.0,1.0))
 
-
         self.cup_visual.set_color(target_rgb)
-
 
         b = SpawnBoundary([self.boundary])
         b.clear()
@@ -38,7 +37,6 @@ class DislPickUpBlueCup(Task):
                  min_rotation=(0, 0, 0),
                  max_rotation=(0, 0, 0))
                  
-
         return ['pick up the %s cup' % target_color_name,
                 'grasp the %s cup and lift it' % target_color_name,
                 'lift the %s cup' % target_color_name]
