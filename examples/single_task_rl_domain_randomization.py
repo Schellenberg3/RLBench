@@ -4,7 +4,7 @@ from rlbench import VisualRandomizationConfig
 from rlbench import ArmActionMode
 from rlbench import ObservationConfig
 from rlbench.action_modes import ActionMode
-from rlbench.tasks import ReachTarget
+from rlbench.tasks import DislPickUpBlueCup
 import numpy as np
 
 
@@ -34,18 +34,24 @@ env = DomainRandomizationEnvironment(
 )
 env.launch()
 
-task = env.get_task(ReachTarget)
+task = env.get_task(DislPickUpBlueCup)
 
 agent = Agent(env.action_size)
 
-training_steps = 120
-episode_length = 20
+training_steps = 5000
+episode_length = 5
+total_eps = training_steps // episode_length
 obs = None
 for i in range(training_steps):
     if i % episode_length == 0:
-        print('Reset Episode')
-        descriptions, obs = task.reset()
-        print(descriptions)
+        print(f'Reset Episode {i//episode_length + 1} of {total_eps}')
+        try:
+            descriptions, obs = task.reset()
+        except RuntimeError as e:
+            print(f'RUNTIME ERROR: {e}')
+            i -= 1  # reset
+            next
+
     action = agent.act(obs)
     obs, reward, terminate = task.step(action)
 
