@@ -8,6 +8,8 @@ from rlbench.observation_config import ObservationConfig
 from rlbench.backend.robot import Robot
 from rlbench.sim2real.domain_randomization import RandomizeEvery
 
+import numpy as np
+
 SCENE_OBJECTS = ['Floor', 'Roof', 'Wall1', 'Wall2', 'Wall3', 'Wall4',
                  'diningTable_visible']
 
@@ -34,6 +36,18 @@ class DomainRandomizationScene(Scene):
         self._previous_index = -1
         self._count = 0
 
+        self._cams = [
+            self._cam_over_shoulder_right,
+            self._cam_over_shoulder_left,
+            self._cam_front,
+            ]
+        self._cam_positions = [
+            self._cam_over_shoulder_right.get_position(),
+            self._cam_over_shoulder_left.get_position(),
+            self._cam_front.get_position(),
+            ]
+
+
         if self._dynamics_rand_config is not None:
             raise NotImplementedError(
                 'Dynamics randomization coming soon! '
@@ -59,7 +73,10 @@ class DomainRandomizationScene(Scene):
     def _randomize(self):
         tree = self._active_task.get_base().get_objects_in_tree(
             ObjectType.SHAPE)
-        tree = [Shape(obj.get_handle()) for obj in tree + self._scene_objects]
+        tree = [Shape(obj.get_handle()) for obj in tree + self._scene_objects]   
+        for camera, position in zip(self._cams, self._cam_positions):
+            new_position = list(position + np.random.normal(0, 0.05, len(position)))
+            camera.set_position(new_position)
         if self._visual_rand_config is not None:
             files = self._visual_rand_config.sample(len(tree))
             for file, obj in zip(files, tree):
